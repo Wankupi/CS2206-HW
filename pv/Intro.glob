@@ -1,0 +1,88 @@
+DIGEST 1253a5d483f757e57a79ba9af171e2c4
+FPV.Intro
+R15:31 Coq.ZArith.ZArith <> <> lib
+R49:67 Coq.micromega.Psatz <> <> lib
+def 342:349 <> plus_one
+R355:355 Coq.Numbers.BinNums <> Z ind
+binder 352:352 <> x:1
+R359:359 Coq.Numbers.BinNums <> Z ind
+R365:367 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R364:364 PV.Intro <> x:1 var
+def 380:391 <> One_plus_one
+R404:406 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R394:401 PV.Intro <> plus_one def
+R424:431 PV.Intro <> plus_one def
+def 453:473 <> One_plus_one_plus_one
+R497:499 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R476:483 PV.Intro <> plus_one def
+R486:493 PV.Intro <> plus_one def
+R517:524 PV.Intro <> plus_one def
+def 671:676 <> square
+R682:682 Coq.Numbers.BinNums <> Z ind
+binder 679:679 <> x:2
+R686:686 Coq.Numbers.BinNums <> Z ind
+R692:694 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R691:691 PV.Intro <> x:2 var
+R695:695 PV.Intro <> x:2 var
+def 707:714 <> square_5
+R725:727 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R717:722 PV.Intro <> square def
+R746:751 PV.Intro <> square def
+def 820:823 <> smul
+R831:831 Coq.Numbers.BinNums <> Z ind
+binder 826:826 <> x:3
+binder 828:828 <> y:4
+R835:835 Coq.Numbers.BinNums <> Z ind
+R849:851 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R845:847 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R841:843 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R840:840 PV.Intro <> x:3 var
+R844:844 PV.Intro <> y:4 var
+R848:848 PV.Intro <> x:3 var
+R852:852 PV.Intro <> y:4 var
+def 864:871 <> smul_ex1
+R882:884 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R874:877 PV.Intro <> smul def
+R902:905 PV.Intro <> smul def
+def 927:934 <> smul_ex2
+R945:947 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R937:940 PV.Intro <> smul def
+R966:969 PV.Intro <> smul def
+def 1303:1308 <> nonneg
+R1314:1314 Coq.Numbers.BinNums <> Z ind
+binder 1311:1311 <> x:5
+R1327:1330 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R1326:1326 PV.Intro <> x:5 var
+prf 1340:1354 <> nonneg_plus_one
+R1367:1367 Coq.Numbers.BinNums <> Z ind
+binder 1364:1364 <> x:6
+R1380:1383 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1372:1377 PV.Intro <> nonneg def
+R1379:1379 PV.Intro <> x:6 var
+R1384:1389 PV.Intro <> nonneg def
+R1392:1399 PV.Intro <> plus_one def
+R1401:1401 PV.Intro <> x:6 var
+R1419:1424 PV.Intro <> nonneg def
+R1427:1434 PV.Intro <> plus_one def
+prf 1453:1465 <> nonneg_square
+R1478:1478 Coq.Numbers.BinNums <> Z ind
+binder 1475:1475 <> x:7
+R1483:1488 PV.Intro <> nonneg def
+R1491:1496 PV.Intro <> square def
+R1498:1498 PV.Intro <> x:7 var
+R1516:1521 PV.Intro <> nonneg def
+R1524:1529 PV.Intro <> square def
+prf 1638:1648 <> nonneg_smul
+R1663:1663 Coq.Numbers.BinNums <> Z ind
+binder 1658:1658 <> x:8
+binder 1660:1660 <> y:9
+R1676:1679 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1668:1673 PV.Intro <> nonneg def
+R1675:1675 PV.Intro <> x:8 var
+R1688:1691 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1680:1685 PV.Intro <> nonneg def
+R1687:1687 PV.Intro <> y:9 var
+R1692:1697 PV.Intro <> nonneg def
+R1700:1703 PV.Intro <> smul def
+R1705:1705 PV.Intro <> x:8 var
+R1707:1707 PV.Intro <> y:9 var

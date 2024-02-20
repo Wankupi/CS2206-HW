@@ -1,0 +1,567 @@
+DIGEST 27f4a012a098740ae5f1fda2c823179f
+FPV.SimpleProofsAndDefs
+R15:32 Coq.Setoids.Setoid <> <> lib
+R50:66 Coq.ZArith.ZArith <> <> lib
+R84:102 Coq.micromega.Psatz <> <> lib
+R120:127 PV.Intro <> <> lib
+prf 1126:1145 <> chickens_and_rabbits
+R1160:1160 Coq.Numbers.BinNums <> Z ind
+binder 1155:1155 <> C:1
+binder 1157:1157 <> R:2
+R1175:1180 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1170:1172 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R1166:1168 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R1165:1165 PV.SimpleProofsAndDefs <> C:1 var
+R1169:1169 PV.SimpleProofsAndDefs <> R:2 var
+R1199:1204 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R1194:1196 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R1186:1188 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R1182:1184 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R1185:1185 PV.SimpleProofsAndDefs <> C:1 var
+R1190:1192 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R1193:1193 PV.SimpleProofsAndDefs <> R:2 var
+R1206:1208 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R1205:1205 PV.SimpleProofsAndDefs <> C:1 var
+prf 3903:3923 <> teachers_and_children
+R3946:3946 Coq.Numbers.BinNums <> Z ind
+binder 3933:3934 <> MT:3
+binder 3936:3937 <> FT:4
+binder 3939:3940 <> MC:5
+binder 3942:3943 <> FC:6
+R3957:3962 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R3953:3955 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R3951:3952 PV.SimpleProofsAndDefs <> MT:3 var
+R3969:3974 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R3965:3967 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R3963:3964 PV.SimpleProofsAndDefs <> FT:4 var
+R3981:3986 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R3977:3979 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R3975:3976 PV.SimpleProofsAndDefs <> MC:5 var
+R3993:3998 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R3989:3991 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R3987:3988 PV.SimpleProofsAndDefs <> FC:6 var
+R4021:4026 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R4016:4018 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R4011:4013 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4006:4008 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4001:4003 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R3999:4000 PV.SimpleProofsAndDefs <> MT:3 var
+R4004:4005 PV.SimpleProofsAndDefs <> FT:4 var
+R4009:4010 PV.SimpleProofsAndDefs <> MC:5 var
+R4014:4015 PV.SimpleProofsAndDefs <> FC:6 var
+R4044:4049 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R4034:4036 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R4029:4031 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4027:4028 PV.SimpleProofsAndDefs <> MC:5 var
+R4032:4033 PV.SimpleProofsAndDefs <> FC:6 var
+R4039:4041 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4037:4038 PV.SimpleProofsAndDefs <> MT:3 var
+R4042:4043 PV.SimpleProofsAndDefs <> FT:4 var
+R4057:4062 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R4052:4054 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R4050:4051 PV.SimpleProofsAndDefs <> FT:4 var
+R4055:4056 PV.SimpleProofsAndDefs <> FC:6 var
+R4070:4075 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R4065:4067 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R4063:4064 PV.SimpleProofsAndDefs <> FC:6 var
+R4068:4069 PV.SimpleProofsAndDefs <> MC:5 var
+R4083:4088 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R4078:4080 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R4076:4077 PV.SimpleProofsAndDefs <> MC:5 var
+R4081:4082 PV.SimpleProofsAndDefs <> MT:3 var
+R4091:4093 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R4089:4090 PV.SimpleProofsAndDefs <> MT:3 var
+prf 4631:4641 <> sum_of_sqr1
+R4656:4656 Coq.Numbers.BinNums <> Z ind
+binder 4651:4651 <> x:7
+binder 4653:4653 <> y:8
+R4674:4677 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R4666:4668 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R4662:4664 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R4661:4661 PV.SimpleProofsAndDefs <> x:7 var
+R4665:4665 PV.SimpleProofsAndDefs <> x:7 var
+R4670:4672 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R4669:4669 PV.SimpleProofsAndDefs <> y:8 var
+R4673:4673 PV.SimpleProofsAndDefs <> y:8 var
+R4679:4681 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R4678:4678 PV.SimpleProofsAndDefs <> x:7 var
+R4682:4682 PV.SimpleProofsAndDefs <> y:8 var
+prf 5025:5035 <> sum_of_sqr2
+R5050:5050 Coq.Numbers.BinNums <> Z ind
+binder 5045:5045 <> x:9
+binder 5047:5047 <> y:10
+R5068:5071 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R5060:5062 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R5056:5058 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5055:5055 PV.SimpleProofsAndDefs <> x:9 var
+R5059:5059 PV.SimpleProofsAndDefs <> x:9 var
+R5064:5066 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5063:5063 PV.SimpleProofsAndDefs <> y:10 var
+R5067:5067 PV.SimpleProofsAndDefs <> y:10 var
+R5077:5079 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5073:5075 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5076:5076 PV.SimpleProofsAndDefs <> x:9 var
+R5080:5080 PV.SimpleProofsAndDefs <> y:10 var
+prf 5541:5551 <> sum_of_sqr2
+R5566:5566 Coq.Numbers.BinNums <> Z ind
+binder 5561:5561 <> x:11
+binder 5563:5563 <> y:12
+R5584:5587 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R5576:5578 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R5572:5574 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5571:5571 PV.SimpleProofsAndDefs <> x:11 var
+R5575:5575 PV.SimpleProofsAndDefs <> x:11 var
+R5580:5582 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5579:5579 PV.SimpleProofsAndDefs <> y:12 var
+R5583:5583 PV.SimpleProofsAndDefs <> y:12 var
+R5593:5595 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5589:5591 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R5592:5592 PV.SimpleProofsAndDefs <> x:11 var
+R5596:5596 PV.SimpleProofsAndDefs <> y:12 var
+R5629:5635 Coq.ZArith.Zcomplements <> sqr_pos thm
+R5639:5641 Coq.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R5629:5635 Coq.ZArith.Zcomplements <> sqr_pos thm
+R5639:5641 Coq.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+def 6316:6323 <> quad_ex1
+R6338:6338 Coq.Numbers.BinNums <> Z ind
+binder 6333:6333 <> x:13
+binder 6335:6335 <> y:14
+R6380:6383 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R6376:6378 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6372:6374 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6368:6370 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6360:6362 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6348:6350 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6344:6346 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6343:6343 PV.SimpleProofsAndDefs <> x:13 var
+R6347:6347 PV.SimpleProofsAndDefs <> x:13 var
+R6356:6358 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6352:6354 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6355:6355 PV.SimpleProofsAndDefs <> x:13 var
+R6359:6359 PV.SimpleProofsAndDefs <> y:14 var
+R6364:6366 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6363:6363 PV.SimpleProofsAndDefs <> y:14 var
+R6367:6367 PV.SimpleProofsAndDefs <> y:14 var
+R6371:6371 PV.SimpleProofsAndDefs <> x:13 var
+R6375:6375 PV.SimpleProofsAndDefs <> y:14 var
+R6417:6427 PV.SimpleProofsAndDefs <> sum_of_sqr1 thm
+R6431:6433 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6417:6427 PV.SimpleProofsAndDefs <> sum_of_sqr1 thm
+R6431:6433 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+prf 6566:6578 <> sum_of_sqr_lt
+R6593:6593 Coq.Numbers.BinNums <> Z ind
+binder 6588:6588 <> x:15
+binder 6590:6590 <> y:16
+R6603:6608 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R6599:6601 Coq.ZArith.BinInt <> ::Z_scope:x_'<'_x not
+R6598:6598 PV.SimpleProofsAndDefs <> x:15 var
+R6602:6602 PV.SimpleProofsAndDefs <> y:16 var
+R6630:6632 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R6622:6624 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6614:6616 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R6610:6612 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6609:6609 PV.SimpleProofsAndDefs <> x:15 var
+R6613:6613 PV.SimpleProofsAndDefs <> x:15 var
+R6618:6620 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6617:6617 PV.SimpleProofsAndDefs <> x:15 var
+R6621:6621 PV.SimpleProofsAndDefs <> y:16 var
+R6626:6628 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R6625:6625 PV.SimpleProofsAndDefs <> y:16 var
+R6629:6629 PV.SimpleProofsAndDefs <> y:16 var
+R7543:7549 Coq.ZArith.Zcomplements <> sqr_pos thm
+R7553:7555 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R7543:7549 Coq.ZArith.Zcomplements <> sqr_pos thm
+R7553:7555 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+def 7994:8001 <> quad_ex2
+R8014:8014 Coq.Numbers.BinNums <> Z ind
+binder 8011:8011 <> x:17
+R8036:8038 Coq.ZArith.BinInt <> ::Z_scope:x_'>'_x not
+R8032:8034 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8024:8026 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8020:8022 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8019:8019 PV.SimpleProofsAndDefs <> x:17 var
+R8023:8023 PV.SimpleProofsAndDefs <> x:17 var
+R8028:8030 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8031:8031 PV.SimpleProofsAndDefs <> x:17 var
+def 8481:8491 <> shift_left1
+R8498:8501 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R8497:8497 Coq.Numbers.BinNums <> Z ind
+R8502:8502 Coq.Numbers.BinNums <> Z ind
+binder 8494:8494 <> f:18
+R8509:8509 Coq.Numbers.BinNums <> Z ind
+binder 8506:8506 <> x:19
+R8513:8513 Coq.Numbers.BinNums <> Z ind
+R8520:8520 PV.SimpleProofsAndDefs <> f:18 var
+R8524:8526 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8523:8523 PV.SimpleProofsAndDefs <> x:19 var
+def 8590:8607 <> shift_left1_square
+binder 8617:8617 <> x:20
+R8642:8644 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R8622:8632 PV.SimpleProofsAndDefs <> shift_left1 def
+R8634:8639 PV.Intro <> square def
+R8641:8641 PV.SimpleProofsAndDefs <> x:20 var
+R8645:8645 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8651:8655 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8661:8661 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R8647:8649 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8646:8646 PV.SimpleProofsAndDefs <> x:20 var
+R8657:8659 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8656:8656 PV.SimpleProofsAndDefs <> x:20 var
+R8678:8688 PV.SimpleProofsAndDefs <> shift_left1 def
+R8691:8696 PV.Intro <> square def
+def 8718:8737 <> shift_left1_plus_one
+binder 8747:8747 <> x:21
+R8774:8776 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R8752:8762 PV.SimpleProofsAndDefs <> shift_left1 def
+R8764:8771 PV.Intro <> plus_one def
+R8773:8773 PV.SimpleProofsAndDefs <> x:21 var
+R8778:8780 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R8777:8777 PV.SimpleProofsAndDefs <> x:21 var
+R8798:8808 PV.SimpleProofsAndDefs <> shift_left1 def
+R8811:8818 PV.Intro <> plus_one def
+def 9552:9563 <> shift_left1'
+R9570:9573 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R9569:9569 Coq.Numbers.BinNums <> Z ind
+R9574:9574 Coq.Numbers.BinNums <> Z ind
+binder 9566:9566 <> f:22
+R9579:9582 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R9578:9578 Coq.Numbers.BinNums <> Z ind
+R9583:9583 Coq.Numbers.BinNums <> Z ind
+binder 9594:9594 <> x:23
+R9599:9599 PV.SimpleProofsAndDefs <> f:22 var
+R9603:9605 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9602:9602 PV.SimpleProofsAndDefs <> x:23 var
+def 9735:9743 <> shift_up1
+R9750:9753 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R9749:9749 Coq.Numbers.BinNums <> Z ind
+R9754:9754 Coq.Numbers.BinNums <> Z ind
+binder 9746:9746 <> f:24
+R9761:9761 Coq.Numbers.BinNums <> Z ind
+binder 9758:9758 <> x:25
+R9765:9765 Coq.Numbers.BinNums <> Z ind
+R9775:9777 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9772:9772 PV.SimpleProofsAndDefs <> f:24 var
+R9774:9774 PV.SimpleProofsAndDefs <> x:25 var
+def 9790:9805 <> shift_up1_square
+binder 9815:9815 <> x:26
+R9838:9840 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R9820:9828 PV.SimpleProofsAndDefs <> shift_up1 def
+R9830:9835 PV.Intro <> square def
+R9837:9837 PV.SimpleProofsAndDefs <> x:26 var
+R9846:9848 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9842:9844 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R9841:9841 PV.SimpleProofsAndDefs <> x:26 var
+R9845:9845 PV.SimpleProofsAndDefs <> x:26 var
+R9866:9874 PV.SimpleProofsAndDefs <> shift_up1 def
+R9877:9882 PV.Intro <> square def
+def 9904:9921 <> shift_up1_plus_one
+binder 9931:9931 <> x:27
+R9956:9958 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R9936:9944 PV.SimpleProofsAndDefs <> shift_up1 def
+R9946:9953 PV.Intro <> plus_one def
+R9955:9955 PV.SimpleProofsAndDefs <> x:27 var
+R9960:9962 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R9959:9959 PV.SimpleProofsAndDefs <> x:27 var
+R9980:9988 PV.SimpleProofsAndDefs <> shift_up1 def
+R9991:9998 PV.Intro <> plus_one def
+def 10243:10251 <> func_plus
+R10260:10263 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R10259:10259 Coq.Numbers.BinNums <> Z ind
+R10264:10264 Coq.Numbers.BinNums <> Z ind
+binder 10254:10254 <> f:28
+binder 10256:10256 <> g:29
+R10269:10272 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R10268:10268 Coq.Numbers.BinNums <> Z ind
+R10273:10273 Coq.Numbers.BinNums <> Z ind
+binder 10284:10284 <> x:30
+R10292:10294 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R10289:10289 PV.SimpleProofsAndDefs <> f:28 var
+R10291:10291 PV.SimpleProofsAndDefs <> x:30 var
+R10295:10295 PV.SimpleProofsAndDefs <> g:29 var
+R10297:10297 PV.SimpleProofsAndDefs <> x:30 var
+def 10312:10320 <> func_mult
+R10329:10332 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R10328:10328 Coq.Numbers.BinNums <> Z ind
+R10333:10333 Coq.Numbers.BinNums <> Z ind
+binder 10323:10323 <> f:31
+binder 10325:10325 <> g:32
+R10338:10341 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R10337:10337 Coq.Numbers.BinNums <> Z ind
+R10342:10342 Coq.Numbers.BinNums <> Z ind
+binder 10353:10353 <> x:33
+R10361:10363 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R10358:10358 PV.SimpleProofsAndDefs <> f:31 var
+R10360:10360 PV.SimpleProofsAndDefs <> x:33 var
+R10364:10364 PV.SimpleProofsAndDefs <> g:32 var
+R10366:10366 PV.SimpleProofsAndDefs <> x:33 var
+prf 10559:10584 <> shift_up1_shift_left1_comm
+binder 10594:10594 <> f:34
+R10624:10626 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R10599:10607 PV.SimpleProofsAndDefs <> shift_up1 def
+R10610:10620 PV.SimpleProofsAndDefs <> shift_left1 def
+R10622:10622 PV.SimpleProofsAndDefs <> f:34 var
+R10627:10637 PV.SimpleProofsAndDefs <> shift_left1 def
+R10640:10648 PV.SimpleProofsAndDefs <> shift_up1 def
+R10650:10650 PV.SimpleProofsAndDefs <> f:34 var
+R10680:10690 PV.SimpleProofsAndDefs <> shift_left1 def
+R10693:10701 PV.SimpleProofsAndDefs <> shift_up1 def
+prf 11315:11335 <> shift_left1_func_plus
+binder 11345:11345 <> f:35
+binder 11347:11347 <> g:36
+R11379:11383 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R11352:11362 PV.SimpleProofsAndDefs <> shift_left1 def
+R11365:11373 PV.SimpleProofsAndDefs <> func_plus def
+R11375:11375 PV.SimpleProofsAndDefs <> f:35 var
+R11377:11377 PV.SimpleProofsAndDefs <> g:36 var
+R11384:11392 PV.SimpleProofsAndDefs <> func_plus def
+R11395:11405 PV.SimpleProofsAndDefs <> shift_left1 def
+R11407:11407 PV.SimpleProofsAndDefs <> f:35 var
+R11411:11421 PV.SimpleProofsAndDefs <> shift_left1 def
+R11423:11423 PV.SimpleProofsAndDefs <> g:36 var
+R11453:11463 PV.SimpleProofsAndDefs <> shift_left1 def
+R11466:11474 PV.SimpleProofsAndDefs <> func_plus def
+prf 11584:11595 <> shift_up1_eq
+binder 11605:11605 <> f:37
+R11621:11623 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R11610:11618 PV.SimpleProofsAndDefs <> shift_up1 def
+R11620:11620 PV.SimpleProofsAndDefs <> f:37 var
+R11624:11632 PV.SimpleProofsAndDefs <> func_plus def
+R11634:11634 PV.SimpleProofsAndDefs <> f:37 var
+binder 11641:11641 <> x:38
+def 12019:12022 <> mono
+R12029:12032 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12028:12028 Coq.Numbers.BinNums <> Z ind
+R12033:12033 Coq.Numbers.BinNums <> Z ind
+binder 12025:12025 <> f:39
+binder 12054:12054 <> n:40
+binder 12056:12056 <> m:41
+R12065:12068 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12060:12063 Coq.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R12059:12059 PV.SimpleProofsAndDefs <> n:40 var
+R12064:12064 PV.SimpleProofsAndDefs <> m:41 var
+R12072:12075 Coq.ZArith.BinInt <> ::Z_scope:x_'<='_x not
+R12069:12069 PV.SimpleProofsAndDefs <> f:39 var
+R12071:12071 PV.SimpleProofsAndDefs <> n:40 var
+R12076:12076 PV.SimpleProofsAndDefs <> f:39 var
+R12078:12078 PV.SimpleProofsAndDefs <> m:41 var
+def 12194:12206 <> plus_one_mono
+R12209:12212 PV.SimpleProofsAndDefs <> mono def
+R12214:12221 PV.Intro <> plus_one def
+R12240:12243 PV.SimpleProofsAndDefs <> mono def
+R12246:12253 PV.Intro <> plus_one def
+def 12388:12392 <> Zcomp
+R12401:12404 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12400:12400 Coq.Numbers.BinNums <> Z ind
+R12405:12405 Coq.Numbers.BinNums <> Z ind
+binder 12395:12395 <> f:42
+binder 12397:12397 <> g:43
+R12410:12413 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12409:12409 Coq.Numbers.BinNums <> Z ind
+R12414:12414 Coq.Numbers.BinNums <> Z ind
+binder 12425:12425 <> x:44
+R12430:12430 PV.SimpleProofsAndDefs <> f:42 var
+R12433:12433 PV.SimpleProofsAndDefs <> g:43 var
+R12435:12435 PV.SimpleProofsAndDefs <> x:44 var
+prf 12446:12457 <> mono_compose
+binder 12467:12467 <> f:45
+binder 12469:12469 <> g:46
+R12480:12485 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12474:12477 PV.SimpleProofsAndDefs <> mono def
+R12479:12479 PV.SimpleProofsAndDefs <> f:45 var
+R12492:12497 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R12486:12489 PV.SimpleProofsAndDefs <> mono def
+R12491:12491 PV.SimpleProofsAndDefs <> g:46 var
+R12498:12501 PV.SimpleProofsAndDefs <> mono def
+R12504:12508 PV.SimpleProofsAndDefs <> Zcomp def
+R12510:12510 PV.SimpleProofsAndDefs <> f:45 var
+R12512:12512 PV.SimpleProofsAndDefs <> g:46 var
+R12532:12535 PV.SimpleProofsAndDefs <> mono def
+R12538:12542 PV.SimpleProofsAndDefs <> Zcomp def
+prf 12755:12764 <> const_mono
+R12777:12777 Coq.Numbers.BinNums <> Z ind
+binder 12774:12774 <> a:47
+R12782:12785 PV.SimpleProofsAndDefs <> mono def
+binder 12792:12792 <> x:48
+R12797:12797 PV.SimpleProofsAndDefs <> a:47 var
+def 13000:13008 <> cube_mono
+R13011:13014 PV.SimpleProofsAndDefs <> mono def
+binder 13021:13021 <> x:49
+R13031:13033 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R13027:13029 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R13026:13026 PV.SimpleProofsAndDefs <> x:49 var
+R13030:13030 PV.SimpleProofsAndDefs <> x:49 var
+R13034:13034 PV.SimpleProofsAndDefs <> x:49 var
+prf 13241:13254 <> mono_func_plus
+binder 13264:13264 <> f:50
+binder 13266:13266 <> g:51
+R13277:13282 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R13271:13274 PV.SimpleProofsAndDefs <> mono def
+R13276:13276 PV.SimpleProofsAndDefs <> f:50 var
+R13289:13294 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R13283:13286 PV.SimpleProofsAndDefs <> mono def
+R13288:13288 PV.SimpleProofsAndDefs <> g:51 var
+R13295:13298 PV.SimpleProofsAndDefs <> mono def
+R13301:13309 PV.SimpleProofsAndDefs <> func_plus def
+R13311:13311 PV.SimpleProofsAndDefs <> f:50 var
+R13313:13313 PV.SimpleProofsAndDefs <> g:51 var
+def 13608:13612 <> assoc
+R13619:13622 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R13618:13618 Coq.Numbers.BinNums <> Z ind
+R13624:13627 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R13623:13623 Coq.Numbers.BinNums <> Z ind
+R13628:13628 Coq.Numbers.BinNums <> Z ind
+binder 13615:13615 <> f:52
+binder 13649:13649 <> x:53
+binder 13651:13651 <> y:54
+binder 13653:13653 <> z:55
+R13671:13673 Coq.Init.Logic <> ::type_scope:x_'='_x not
+R13660:13660 PV.SimpleProofsAndDefs <> f:52 var
+R13665:13665 PV.SimpleProofsAndDefs <> f:52 var
+R13669:13669 PV.SimpleProofsAndDefs <> z:55 var
+R13667:13667 PV.SimpleProofsAndDefs <> y:54 var
+R13662:13662 PV.SimpleProofsAndDefs <> x:53 var
+R13674:13674 PV.SimpleProofsAndDefs <> f:52 var
+R13684:13684 PV.SimpleProofsAndDefs <> z:55 var
+R13677:13677 PV.SimpleProofsAndDefs <> f:52 var
+R13681:13681 PV.SimpleProofsAndDefs <> y:54 var
+R13679:13679 PV.SimpleProofsAndDefs <> x:53 var
+prf 13816:13825 <> plus_assoc
+R13828:13832 PV.SimpleProofsAndDefs <> assoc def
+binder 13839:13839 <> x:56
+binder 13841:13841 <> y:57
+R13847:13849 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R13846:13846 PV.SimpleProofsAndDefs <> x:56 var
+R13850:13850 PV.SimpleProofsAndDefs <> y:57 var
+R13868:13872 PV.SimpleProofsAndDefs <> assoc def
+prf 13892:13901 <> mult_assoc
+R13904:13908 PV.SimpleProofsAndDefs <> assoc def
+binder 13915:13915 <> x:58
+binder 13917:13917 <> y:59
+R13923:13925 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R13922:13922 PV.SimpleProofsAndDefs <> x:58 var
+R13926:13926 PV.SimpleProofsAndDefs <> y:59 var
+R13944:13948 PV.SimpleProofsAndDefs <> assoc def
+prf 14092:14101 <> smul_assoc
+R14104:14108 PV.SimpleProofsAndDefs <> assoc def
+R14110:14113 PV.Intro <> smul def
+def 14582:14605 <> preserved_by_shifting_up
+R14611:14611 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14618:14622 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14613:14616 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14612:14612 Coq.Numbers.BinNums <> Z ind
+R14617:14617 Coq.Numbers.BinNums <> Z ind
+binder 14608:14608 <> P:60
+binder 14647:14647 <> f:61
+R14653:14656 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14650:14650 PV.SimpleProofsAndDefs <> P:60 var
+R14652:14652 PV.SimpleProofsAndDefs <> f:61 var
+R14657:14657 PV.SimpleProofsAndDefs <> P:60 var
+R14660:14668 PV.SimpleProofsAndDefs <> shift_up1 def
+R14670:14670 PV.SimpleProofsAndDefs <> f:61 var
+def 14686:14711 <> preserved_by_shifting_left
+R14717:14717 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14724:14728 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14719:14722 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14718:14718 Coq.Numbers.BinNums <> Z ind
+R14723:14723 Coq.Numbers.BinNums <> Z ind
+binder 14714:14714 <> P:62
+binder 14753:14753 <> f:63
+R14759:14762 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R14756:14756 PV.SimpleProofsAndDefs <> P:62 var
+R14758:14758 PV.SimpleProofsAndDefs <> f:63 var
+R14763:14763 PV.SimpleProofsAndDefs <> P:62 var
+R14766:14776 PV.SimpleProofsAndDefs <> shift_left1 def
+R14778:14778 PV.SimpleProofsAndDefs <> f:63 var
+prf 14866:14872 <> mono_pu
+R14875:14898 PV.SimpleProofsAndDefs <> preserved_by_shifting_up def
+R14900:14903 PV.SimpleProofsAndDefs <> mono def
+R14922:14945 PV.SimpleProofsAndDefs <> preserved_by_shifting_up def
+R14948:14951 PV.SimpleProofsAndDefs <> mono def
+R14954:14962 PV.SimpleProofsAndDefs <> shift_up1 def
+prf 15017:15023 <> mono_pl
+R15026:15051 PV.SimpleProofsAndDefs <> preserved_by_shifting_left def
+R15053:15056 PV.SimpleProofsAndDefs <> mono def
+R15075:15100 PV.SimpleProofsAndDefs <> preserved_by_shifting_left def
+R15103:15106 PV.SimpleProofsAndDefs <> mono def
+R15109:15119 PV.SimpleProofsAndDefs <> shift_left1 def
+R15149:15151 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R15157:15159 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R15149:15151 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R15157:15159 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+def 15367:15377 <> univ_nonneg
+binder 15380:15380 <> A:64
+R15394:15397 Coq.Init.Logic <> ::type_scope:x_'->'_x not
+R15393:15393 PV.SimpleProofsAndDefs <> A:64 var
+R15398:15398 Coq.Numbers.BinNums <> Z ind
+binder 15390:15390 <> f:65
+R15422:15422 PV.SimpleProofsAndDefs <> A:64 var
+binder 15419:15419 <> a:66
+R15428:15431 Coq.ZArith.BinInt <> ::Z_scope:x_'>='_x not
+R15425:15425 PV.SimpleProofsAndDefs <> f:65 var
+R15427:15427 PV.SimpleProofsAndDefs <> a:66 var
+prf 15442:15455 <> univ_nonneg_pu
+R15458:15481 PV.SimpleProofsAndDefs <> preserved_by_shifting_up def
+R15483:15493 PV.SimpleProofsAndDefs <> univ_nonneg def
+prf 15593:15606 <> univ_nonneg_pl
+R15609:15634 PV.SimpleProofsAndDefs <> preserved_by_shifting_left def
+R15636:15646 PV.SimpleProofsAndDefs <> univ_nonneg def
+def 16590:16597 <> mono_ex1
+R16600:16603 PV.SimpleProofsAndDefs <> mono def
+binder 16610:16610 <> x:67
+R16636:16638 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R16624:16626 Coq.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R16620:16622 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R16616:16618 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R16615:16615 PV.SimpleProofsAndDefs <> x:67 var
+R16619:16619 PV.SimpleProofsAndDefs <> x:67 var
+R16623:16623 PV.SimpleProofsAndDefs <> x:67 var
+R16632:16634 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R16628:16630 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R16631:16631 PV.SimpleProofsAndDefs <> x:67 var
+R16635:16635 PV.SimpleProofsAndDefs <> x:67 var
+R16640:16642 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R16643:16643 PV.SimpleProofsAndDefs <> x:67 var
+R16987:16990 PV.SimpleProofsAndDefs <> mono def
+binder 16997:16997 <> x:68
+R17003:17005 Coq.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R17002:17002 PV.SimpleProofsAndDefs <> x:68 var
+R16987:16990 PV.SimpleProofsAndDefs <> mono def
+binder 16997:16997 <> x:69
+R17003:17005 Coq.ZArith.BinInt <> ::Z_scope:x_'-'_x not
+R17002:17002 PV.SimpleProofsAndDefs <> x:69 var
+R17549:17552 PV.SimpleProofsAndDefs <> mono def
+R18077:18080 PV.SimpleProofsAndDefs <> mono def
+binder 18087:18087 <> x:70
+R18093:18095 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R18092:18092 PV.SimpleProofsAndDefs <> x:70 var
+R18077:18080 PV.SimpleProofsAndDefs <> mono def
+binder 18087:18087 <> x:71
+R18093:18095 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R18092:18092 PV.SimpleProofsAndDefs <> x:71 var
+R18122:18125 PV.SimpleProofsAndDefs <> mono def
+R18260:18268 PV.SimpleProofsAndDefs <> cube_mono prfax
+R18260:18268 PV.SimpleProofsAndDefs <> cube_mono prfax
+R18522:18533 PV.SimpleProofsAndDefs <> mono_compose thm
+R18547:18558 PV.SimpleProofsAndDefs <> mono_compose thm
+R18522:18533 PV.SimpleProofsAndDefs <> mono_compose thm
+R18547:18558 PV.SimpleProofsAndDefs <> mono_compose thm
+R18590:18593 PV.SimpleProofsAndDefs <> mono def
+R18623:18626 PV.SimpleProofsAndDefs <> mono def
+R18629:18633 PV.SimpleProofsAndDefs <> Zcomp def
+R18636:18643 PV.Intro <> plus_one def
+def 18780:18787 <> mono_ex2
+R18790:18793 PV.SimpleProofsAndDefs <> mono def
+binder 18800:18800 <> x:72
+R18826:18828 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R18814:18816 Coq.ZArith.BinInt <> ::Z_scope:x_'+'_x not
+R18810:18812 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R18806:18808 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R18805:18805 PV.SimpleProofsAndDefs <> x:72 var
+R18809:18809 PV.SimpleProofsAndDefs <> x:72 var
+R18813:18813 PV.SimpleProofsAndDefs <> x:72 var
+R18822:18824 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R18818:18820 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R18821:18821 PV.SimpleProofsAndDefs <> x:72 var
+R18825:18825 PV.SimpleProofsAndDefs <> x:72 var
+R18830:18832 Coq.ZArith.BinInt <> ::Z_scope:x_'*'_x not
+R18833:18833 PV.SimpleProofsAndDefs <> x:72 var

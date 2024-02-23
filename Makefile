@@ -30,12 +30,12 @@ COMPCERT_FILE_NAMES = \
 COMPCERT_FILES=$(COMPCERT_FILE_NAMES:%.v=$(COMPCERT_DIR)/%.v)
 
 PV_FILE_NAMES = \
-  Intro.v SimpleProofsAndDefs.v 
+  Intro.v SimpleProofsAndDefs.v InductiveType.v Syntax.v
   
 PV_FILES=$(PV_FILE_NAMES:%.v=$(PV_DIR)/%.v)
 
 ASSIGNMENT_FILE_NAMES = \
-  Assignment0220.v  
+  Assignment0220.v  Assignment0223.v
 
 ASSIGNMENT_FILES=$(ASSIGNMENT_FILE_NAMES:%.v=$(ASSIGNMENT_DIR)/%.v)
 
@@ -56,6 +56,10 @@ $(PV_FILES:%.v=%.vo): %.vo: %.v
 	@echo COQC $(<F)
 	@$(COQC) $(PV_FLAG) $<
 
+$(ASSIGNMENT_FILES:%.v=%.vo): %.vo: %.v
+	@echo COQC $(<F)
+	@$(COQC) $(PV_FLAG) $<
+	
 all: $(FILES:%.v=%.vo)
 
 _CoqProject:

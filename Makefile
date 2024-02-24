@@ -4,7 +4,7 @@ COMPCERT_DIR = compcert_lib
 PV_DIR = pv
 ASSIGNMENT_DIR = Assignment
 
-COQBIN=
+COQBIN=/home/wkp/.opam/old/bin/
 
 -include CONFIGURE
 
@@ -34,33 +34,23 @@ PV_FILE_NAMES = \
   
 PV_FILES=$(PV_FILE_NAMES:%.v=$(PV_DIR)/%.v)
 
-ASSIGNMENT_FILE_NAMES = \
-  Assignment0220.v  Assignment0223.v
-
-ASSIGNMENT_FILES=$(ASSIGNMENT_FILE_NAMES:%.v=$(ASSIGNMENT_DIR)/%.v)
 
 FILES = $(PV_FILES) \
-  $(ASSIGNMENT_FILES) \
   $(SETS_FILES) \
   $(COMPCERT_FILES)
 
 $(SETS_FILES:%.v=%.vo): %.vo: %.v
-	@echo COQC $<
 	@$(COQC) $(SETS_FLAG) $<
 
 $(COMPCERT_FILES:%.v=%.vo): %.vo: %.v
-	@echo COQC $<
 	@$(COQC) $(COMPCERT_FLAG) $<
 			
 $(PV_FILES:%.v=%.vo): %.vo: %.v
-	@echo COQC $(<F)
 	@$(COQC) $(PV_FLAG) $<
 
-$(ASSIGNMENT_FILES:%.v=%.vo): %.vo: %.v
-	@echo COQC $(<F)
-	@$(COQC) $(PV_FLAG) $<
-	
-all: $(FILES:%.v=%.vo)
+VO_FILES = $(FILES:%.v=%.vo)
+
+all: $(VO_FILES) clean_extra
 
 _CoqProject:
 	@echo $(DEP_FLAG) > _CoqProject
@@ -78,6 +68,13 @@ clean:
 	@rm -f *.vos */*.vos 
 	@rm -f .*.aux */.*.aux
 	@rm -f .depend
+
+clean_extra: $(VO_FILES)
+	@rm -f *.glob */*.glob
+	@rm -f *.vok */*.vok
+	@rm -f *.vos */*.vos 
+	@rm -f .*.aux */.*.aux
+
 
 .PHONY: clean depend
 .DEFAULT_GOAL := all

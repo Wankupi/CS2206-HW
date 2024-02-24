@@ -9,7 +9,10 @@ Local Open Scope Z.
 
 Lemma size_nonneg: forall t,
   0 <= tree_size t.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intro.
+  induction t; simpl; lia.
+Qed.
 
 
 (************)
@@ -19,8 +22,20 @@ Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结
 Lemma reverse_result_Node: forall t t1 k t2,
   tree_reverse t = Node t1 k t2 ->
   t = Node (tree_reverse t2) k (tree_reverse t1).
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
-
+Proof.
+  intros.
+  assert(tree_reverse t = Node t1 k t2 -> tree_reverse (tree_reverse t) = tree_reverse (Node t1 k t2)).
+  {
+    intros.
+    rewrite H0.
+    reflexivity.
+  }
+  apply H0 in H.
+  specialize (reverse_involutive t) as H3.
+  rewrite H3 in H.
+  rewrite H.
+  reflexivity.
+Qed.
 
 (************)
 (** 习题：  *)
@@ -46,5 +61,17 @@ Fixpoint right_most (t: tree) (default: Z): Z :=
 
 Lemma left_most_reverse: forall t default,
   left_most (tree_reverse t) default = right_most t default.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros t.
+  induction t.
+
+  + simpl.
+    reflexivity.
+
+  + intro.
+    simpl.
+    specialize (IHt2 v) as H3.
+    rewrite H3.
+    reflexivity.
+Qed.
 

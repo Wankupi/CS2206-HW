@@ -30,7 +30,7 @@ COMPCERT_FILE_NAMES = \
 COMPCERT_FILES=$(COMPCERT_FILE_NAMES:%.v=$(COMPCERT_DIR)/%.v)
 
 PV_FILE_NAMES = \
-  Intro.v SimpleProofsAndDefs.v InductiveType.v Syntax.v
+  Intro.v SimpleProofsAndDefs.v InductiveType.v Syntax.v RecurProp.v DenotationalSemantics.v
   
 PV_FILES=$(PV_FILE_NAMES:%.v=$(PV_DIR)/%.v)
 

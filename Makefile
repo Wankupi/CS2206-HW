@@ -36,7 +36,7 @@ PV_FILE_NAMES = \
 PV_FILES=$(PV_FILE_NAMES:%.v=$(PV_DIR)/%.v)
 
 ASSIGNMENT_FILE_NAMES = \
-  Assignment0220.v  Assignment0223.v
+  Assignment0220.v  Assignment0223.v Assignment0305.v
 
 ASSIGNMENT_FILES=$(ASSIGNMENT_FILE_NAMES:%.v=$(ASSIGNMENT_DIR)/%.v)
 

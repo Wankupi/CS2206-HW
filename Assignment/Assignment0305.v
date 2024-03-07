@@ -26,13 +26,30 @@ Local Open Scope sets.
 Example true_and_fact:
   forall e: expr_bool,
     [[ ETrue && e ]] ~=~ e.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  unfold bequiv.
+  simpl.
+  unfold and_sem.
+  simpl.
+  reflexivity.
+Qed.
 
 (** 请利用已有的结论_[lt_plus_one_fact]_证明下面命题。*)
 
 Example lt_plus_one_and_fact:
   forall e: expr_bool,
     [[ "x" < "x" + 1 && e ]] ~=~ e.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  unfold bequiv.
+  intros s.
+  simpl eval_expr_bool.
+  unfold and_sem.
+  specialize (lt_plus_one_fact s) as H.
+  simpl eval_expr_bool in H. 
+  rewrite H.
+  reflexivity. 
+Qed.
 
 

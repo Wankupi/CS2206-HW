@@ -549,3 +549,232 @@ Lemma Rels22_concat_union_distr_r:
     (x ∪ y) ∘ z == x ∘ z ∪ y ∘ z.
 Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
 
+Module DntSem_SimpleWhile3_Properties.
+Import Lang_SimpleWhile
+       StateModel_SimpleWhile1
+       DntSem_SimpleWhile2
+       DntSem_SimpleWhile3.
+
+Example lt10_is_true_fact: 
+  (fun s => ⟦ "x" < 10 ⟧ s = true) ==
+  (fun s => s "x" < 10).
+Proof.
+  sets_unfold.
+  intros s.
+  rewrite lt_spec.
+  unfold_sem.
+  tauto.
+Qed.
+
+Example lt10_test_true_fact:
+  forall s1 s2: state,
+    (s1, s2) ∈ test_true (⟦ "x" < 10 ⟧) <->
+    s1 "x" < 10 /\ s1 = s2.
+Proof.
+  unfold test_true.
+  sets_unfold.
+  intros s1 s2.
+  rewrite lt_spec.
+  unfold_sem.
+  tauto.
+Qed.
+
+(** 能否用_[lt10_is_true_fact]_证明_[lt10_test_true_fact]_呢？可以！*)
+
+Example lt10_test_true_fact___again:
+  forall s1 s2: state,
+    (s1, s2) ∈ test_true (⟦ "x" < 10 ⟧) <->
+    s1 "x" < 10 /\ s1 = s2.
+Proof.
+  unfold test_true.
+  intros s1 s2.
+  rewrite lt10_is_true_fact.
+  sets_unfold.
+  tauto.
+Qed.
+
+Example lt_plus_one_is_true_fact: 
+  (fun s => ⟦ "x" < "x" + 1 ⟧ s = true) ==
+  Sets.full.
+Proof.
+  sets_unfold.
+  intros s.
+  rewrite lt_plus_one_fact.
+  unfold_sem.
+  tauto.
+Qed.
+
+Example lt_plus_one_is_false_fact: 
+  (fun s => ⟦ "x" < "x" + 1 ⟧ s = false) == ∅.
+Proof.
+  sets_unfold.
+  intros s.
+  rewrite lt_plus_one_fact.
+  unfold_sem.
+  intuition.
+Qed.
+
+Example lt_plus_one_test_true_fact: 
+  test_true (⟦ "x" < "x" + 1 ⟧) == Rels.id.
+Proof.
+  unfold test_true.
+  rewrite lt_plus_one_is_true_fact.
+  apply Rels_test_full.
+Qed.
+
+Example lt_plus_one_test_false_fact: 
+  test_false (⟦ "x" < "x" + 1 ⟧) == ∅.
+Proof.
+  unfold test_false.
+  rewrite lt_plus_one_is_false_fact.
+  apply Rels_test_empty.
+Qed.
+
+Example inc_x_fact:
+  forall s1 s2 n,
+    (s1, s2) ∈ eval_com ([["x" = "x" + 1]]) ->
+    s1 "x" = n ->
+    s2 "x" = n + 1.
+Proof.
+  intros.
+  simpl in H.
+  unfold_sem in H.
+  pose proof H.(asgn_sem_asgn_var) as H1; simpl in H1.
+  lia.
+Qed.
+
+Definition cequiv (c1 c2: com): Prop :=
+  ⟦ c1 ⟧ == ⟦ c2 ⟧.
+
+Notation "c1 '~=~' c2" := (cequiv c1 c2)
+  (at level 69, no associativity, only printing).
+
+Ltac any_equiv' x y ::=
+  match type of x with
+  | expr_int  => exact (iequiv x y)
+  | expr_bool => exact (bequiv x y)
+  | com       => exact (cequiv x y)
+  | _         =>
+      match type of y with
+      | expr_int  => exact (iequiv x y)
+      | expr_bool => exact (bequiv x y)
+      | com       => exact (cequiv x y)
+      end
+  end.
+
+(** 可以证明，_[asgn_sem]_总是能由相等的函数计算得到相等的集合。*)
+
+#[export] Instance asgn_sem_congr:
+  Proper (eq ==> func_equiv _ _ ==> Sets.equiv) asgn_sem.
+Proof.
+  unfold Proper, respectful.
+  intros x x' Hx D1 D2 H; subst x'.
+  sets_unfold; intros s1 s2.
+  split; intros; split.
+  + rewrite <- H.
+    apply H0.(asgn_sem_asgn_var).
+  + apply H0.(asgn_sem_other_var).
+  + rewrite H.
+    apply H0.(asgn_sem_asgn_var).
+  + apply H0.(asgn_sem_other_var).
+Qed.
+
+(** 由于_[seq_sem]_实际就是二元关系的连接，因此它显然能保持集合相等。*)
+
+#[export] Instance seq_sem_congr:
+  Proper (Sets.equiv ==> Sets.equiv ==> Sets.equiv) seq_sem.
+Proof. apply Rels_concat_congr. Qed.
+
+(** 对于if语句的情况，我们首先证明，_[test_true]_与_[test_false]_都能够由相等的函数
+    得到相等的集合。*)
+
+#[export] Instance test_true_congr:
+  Proper (func_equiv _ _ ==> Sets.equiv) test_true.
+Proof.
+  unfold Proper, respectful, test_true.
+  unfold func_equiv, pointwise_relation; sets_unfold;
+  intros D1 D2 H s1 s2.
+  rewrite H.
+  tauto.
+Qed.
+(** *)
+
+#[export] Instance test_false_congr:
+  Proper (func_equiv _ _ ==> Sets.equiv) test_false.
+Proof.
+  unfold Proper, respectful, test_false.
+  unfold func_equiv, pointwise_relation; sets_unfold;
+  intros D1 D2 H s1 s2.
+  rewrite H.
+  tauto.
+Qed.
+
+(** 基于此，我们再证明_[if_sem]_保持集合相等。*)
+
+#[export] Instance if_sem_congr:
+  Proper (func_equiv _ _ ==>
+          Sets.equiv ==>
+          Sets.equiv ==>
+          Sets.equiv) if_sem.
+Proof.
+  unfold Proper, respectful, if_sem.
+  intros D01 D02 H0 D11 D12 H1 D21 D22 H2.
+  rewrite H0, H1, H2.
+  reflexivity.
+Qed.
+
+(** 我们最后证明_[while_sem]_能保持集合相等。*)
+
+#[export] Instance while_sem_congr:
+  Proper (func_equiv _ _ ==>
+          Sets.equiv ==>
+          Sets.equiv) while_sem.
+Proof.
+  unfold Proper, respectful, while_sem.
+  intros D01 D02 H0 D11 D12 H1.
+  apply Sets_indexed_union_congr.
+  intros n.
+  induction n; simpl.
+  + reflexivity.
+  + rewrite IHn, H0, H1.
+    reflexivity.
+Qed.
+
+(** 下面证明Simplewhile程序语句行为等价的代数性质。*)
+
+#[export] Instance CAsgn_congr:
+  Proper (eq ==> iequiv ==> cequiv) CAsgn.
+Proof.
+  unfold Proper, respectful, cequiv, iequiv.
+  intros; simpl.
+  apply asgn_sem_congr; tauto.
+Qed.
+(** *)
+
+#[export] Instance CSeq_congr:
+  Proper (cequiv ==> cequiv ==> cequiv) CSeq.
+Proof.
+  unfold Proper, respectful, cequiv.
+  intros; simpl.
+  apply seq_sem_congr; tauto.
+Qed.
+(** *)
+
+#[export] Instance CIf_congr:
+  Proper (bequiv ==> cequiv ==> cequiv ==> cequiv) CIf.
+Proof.
+  unfold Proper, respectful, bequiv, cequiv; intros.
+  intros; simpl.
+  apply if_sem_congr; tauto.
+Qed.
+(** *)
+
+#[export] Instance CWhile_congr:
+  Proper (bequiv ==> cequiv ==> cequiv) CWhile.
+Proof.
+  unfold Proper, respectful, bequiv, cequiv; intros.
+  intros; simpl.
+  apply while_sem_congr; tauto.
+Qed.
+
+End DntSem_SimpleWhile3_Properties.

@@ -206,6 +206,29 @@ Ltac ___unfold_sem_in_hyp H ::=
   unfold_expr_bool_sem_in_hyp H;
   unfold_expr_int_sem_in_hyp H.
 
+Ltac unfold_sem1_tac T :=
+  match T with
+  | context G [eval_com (CIf ?e ?c1 ?c2)] =>
+      let if_sem' := eval cbv [if_sem] in if_sem in
+      let ret := eval cbv beta iota in (if_sem' ⟦ e ⟧ ⟦ c1 ⟧ ⟦ c2 ⟧) in
+      let T' := context G [ret] in
+      T'
+  | context G [eval_com (CSeq ?c1 ?c2)] =>
+      let seq_sem' := eval cbv [seq_sem] in seq_sem in
+      let ret := eval cbv beta iota in (seq_sem' ⟦ c1 ⟧ ⟦ c2 ⟧) in
+      let T' := context G [ret] in
+      T'
+  end.
+
+Ltac unfold_sem1_in_hypo_tac H :=
+  match type of H with
+  | ?T => let T' := unfold_sem1_tac T in
+          change T' in H
+  end.
+
+Tactic Notation "unfold_sem1" "in" constr(H) :=
+  unfold_sem1_in_hypo_tac H.
+
 
 End DntSem_SimpleWhile3.
 
@@ -491,7 +514,7 @@ Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结
     - 广义并：如果_[U]_是集合的集合，那么_[⨆ U]_表示它们的广义并，定义为
       _[Sets.general_union]_；
 
-    - 广义交：如果_[U]_是集合的集合，那么_[⨆ U]_表示它们的广义交，定义为
+    - 广义交：如果_[U]_是集合的集合，那么_[⨅ U]_表示它们的广义交，定义为
       _[Sets.general_intersect]_。
 *)
 
@@ -505,7 +528,6 @@ Proof.
   rewrite (Sets_indexed_intersect_included n).
   reflexivity.
 Qed.
-
 
 (** ** 逻辑命题的Coq证明 *)
 
@@ -527,7 +549,7 @@ Qed.
     - 右分配律：_[(x ∪ y) ∘ z == x ∘ z ∪ y ∘ z]_
 
     另外，二元关系对并集的分配律对于无穷并集也成立。*)
-
+Check Rels_concat_indexed_union_distr_l.
 (************)
 (** 习题：  *)
 (************)
@@ -549,11 +571,19 @@ Lemma Rels22_concat_union_distr_r:
     (x ∪ y) ∘ z == x ∘ z ∪ y ∘ z.
 Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
 
+
+(** * 程序语句指称语义的性质 *)
+
 Module DntSem_SimpleWhile3_Properties.
 Import Lang_SimpleWhile
        StateModel_SimpleWhile1
        DntSem_SimpleWhile2
-       DntSem_SimpleWhile3.
+       DntSem_SimpleWhile3
+       LangTrans.
+
+(** 下面是一些关于语义算子和指称语义的例子。首先，根据_[test_true]_、_[test_false]_
+    以及测试关系的定义，我们知道_[test_true ⟦ "x" < 10 ⟧]_中只包含变量x取值小于10的
+    所有程序状态。*)
 
 Example lt10_is_true_fact: 
   (fun s => ⟦ "x" < 10 ⟧ s = true) ==
@@ -593,6 +623,9 @@ Proof.
   tauto.
 Qed.
 
+(** 其次，由于x < x + 1这个布尔表达式恒为真，所以它对应的_[test_true]_关系是相等关
+    系，它对应的_[test_false]_关系是空关系。*)
+
 Example lt_plus_one_is_true_fact: 
   (fun s => ⟦ "x" < "x" + 1 ⟧ s = true) ==
   Sets.full.
@@ -630,18 +663,270 @@ Proof.
   apply Rels_test_empty.
 Qed.
 
+(** 下面这个例子描述了一条简单赋值语句的性质。*)
+
 Example inc_x_fact:
   forall s1 s2 n,
-    (s1, s2) ∈ eval_com ([["x" = "x" + 1]]) ->
+    (s1, s2) ∈ ⟦ "x" = "x" + 1 ⟧ ->
     s1 "x" = n ->
     s2 "x" = n + 1.
 Proof.
   intros.
-  simpl in H.
   unfold_sem in H.
   pose proof H.(asgn_sem_asgn_var) as H1; simpl in H1.
   lia.
 Qed.
+
+(** 下面这个例子描述了一条条件分支语句的性质。我们在第一次证明它的时候主要会使用
+    _[Sets_unfold1]_指令和_[unfold_sem1]_指令，分别表示将集合运算的定义展开一层，以
+    及将程序语句语义的定义展开一层。*)
+
+Example abs_neg_5_fact:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ if ("x" < 0)
+                 then { "y" = 0 - "x" }
+                 else { "y" = "x" } ⟧ ->
+    s1 "x" = -5 ->
+    s2 "y" = 5.
+Proof.
+  intros.
+  (** 首先展开if语句的语义定义。*)
+  unfold_sem1 in H.
+  Sets_unfold1 in H.
+  (** 现在，关于程序语义的前提已经展开为：
+      - H: (s1, s2) ∈ test_true ⟦ "x" < 0 ⟧ ∘
+                      ⟦ "x" = 0 - "x" ⟧ \/
+           (s1, s2) ∈ test_false ⟦ "x" < 0 ⟧ ∘
+                      ⟦ skip ⟧
+      因此可以进行分类讨论。*)
+  destruct H.
+  + (** 执行if-then分支的情况 *)
+    Sets_unfold1 in H.
+    destruct H as [s1' [? ?] ].
+    (** 根据_[∘]_的定义，我们知道，存在_[s1']_使得
+        - H: (s1, s1') ∈ test_true ⟦ "x" < 0 ⟧
+        - H1: (s1', s2) ∈ ⟦ "x" = 0 - "x" ⟧ *)
+    unfold test_true in H; Sets_unfold1 in H.
+    (** 根据_[test_true]_的定义，我们知道_[s1 = s1']_。*)
+    destruct H as [_ ?]; subst s1'.
+    (** 现在，所有_[s1']_全部被替换为_[s1]_了，更新后的_[H1]_是：
+        - H1: (s1, s2) ∈ ⟦ "x" = 0 - "x" ⟧
+        下面只需要利用赋值语句的语义证明结论就可以了。 *)
+    pose proof H1.(asgn_sem_asgn_var).
+    unfold_sem in H.
+    lia.
+  + (** 执行if-else分支的情况 *)
+    Sets_unfold1 in H.
+    destruct H as [s1' [? ?] ].
+    (** 根据_[∘]_的定义，我们知道，存在_[s1']_使得
+        - H: (s1, s1') ∈ test_false ⟦ "x" < 0 ⟧
+        - H1: (s1', s2) ∈ ⟦ skip ⟧
+        这一个分支的证明中就只需要利用_[H]_和另一个前提_[s1 "x" = 5]_推出矛盾即可。 *)
+    unfold test_false in H; Sets_unfold1 in H.
+    destruct H as [? _].
+    (** 利用_[test_false]_的定义，我们知道
+        - ⟦ "x" < 0 ⟧ s1 = false
+        这个分支中，我们就不需要使用_[s1 = s1']_这个条件了。*)
+    unfold_sem in H.
+    rewrite H0 in H; simpl in H.
+    discriminate H.
+Qed.
+
+(** 在上面证明中，有这样一些有用的证明模式：
+    - 遇到形如_[(s1, s2) ∈ ⟦ if (...) then { ... } else { ... } ⟧]_或形如
+      _[(s1, s2) ∈ R1 ∪ R2]_的前提时，可以对其分类讨论；
+    - 遇到形如_[(s1, s2) ∈ ⟦ ... ; ... ⟧]_或形如_[(s1, s2) ∈ R1 ∘ R2]_的前提时，可
+      以将其拆解为两个步骤的信息；
+    - 遇到形如_[(s1, s2) ∈ test_true (...)]_或_[(s1, s2) ∈ test_false (...)]_的前
+      提时，可以得到_[s1]_上布尔表达式求值的真假，并推断出_[s1 = s2]_。*)
+
+Ltac destruct_Rels_concat_tac H x H1 H2 :=
+  match type of H with
+  | (?s1, ?s2) ∈ ?R1 ∘ ?R2 =>
+      change (exists x0, (s1, x0) ∈ R1 /\ (x0, s2) ∈ R2) in H;
+      destruct H as [x [H1 H2] ]
+  end.
+
+Ltac destruct_Rels_concat_test_tac H H1 H2 :=
+  match type of H with
+  | (?s1, ?s2) ∈ test_true ?X ∘ ?R2 =>
+      let s := fresh "s" in
+      let H0 := fresh "H" in
+      change (exists s, (X s1 = true /\ s1 = s) /\ (s, s2) ∈ R2) in H;
+      destruct H as [s [ [H1 H0] H2] ];
+      subst s;
+      try apply lt_spec in H1
+  | (?s1, ?s2) ∈ test_false ?X ∘ ?R2 =>
+      let s := fresh "s" in
+      let H0 := fresh "H" in
+      change (exists s, (X s1 = false /\ s1 = s) /\ (s, s2) ∈ R2) in H;
+      destruct H as [s [ [H1 H0] H2] ];
+      subst s;
+      try (rewrite <- Bool.not_true_iff_false in H1;
+           rewrite lt_spec in H1)
+  end.
+
+Tactic Notation "destruct_concat" constr(H) "as" "[" simple_intropattern(x) simple_intropattern(H1) simple_intropattern(H2) "]" :=
+  destruct_Rels_concat_tac H x H1 H2.
+
+Tactic Notation "destruct_concat" constr(H) "as" "[" simple_intropattern(H1) simple_intropattern(H2) "]" :=
+  destruct_Rels_concat_test_tac H H1 H2.
+
+(** 基于这些初步集成的指令，我们可以重新证明_[abs_neg_5_fact]_。*)
+
+Example abs_neg_5_fact___again:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ if ("x" < 0)
+                 then { "y" = 0 - "x" }
+                 else { "y" = "x" } ⟧ ->
+    s1 "x" = -5 ->
+    s2 "y" = 5.
+Proof.
+  intros.
+  unfold_sem1 in H.
+  Sets_unfold1 in H.
+  destruct H.
+  + destruct_concat H as [_ H].
+    pose proof H.(asgn_sem_asgn_var).
+    unfold_sem in H1.
+    lia.
+  + destruct_concat H as [H _].
+    unfold_sem in H.
+    lia.
+Qed.
+
+(** 事实上，我们可以对这些证明步骤进一步集成。*)
+
+Ltac choose_if_then_branch H :=
+  try unfold_sem1 in H;
+  Sets_unfold1 in H;
+  destruct H as [H | H];
+  [
+    Sets_unfold1 in H;
+    let s := fresh "s" in
+    let H0 := fresh "H" in
+    destruct H as [s [H0 H] ];
+    unfold test_true in H0; Sets_unfold1 in H0;
+    destruct H0 as [_ H0]; subst s
+  |
+    Sets_unfold1 in H;
+    let s := fresh "s" in
+    destruct H as [s [H _] ];
+    unfold test_false in H; Sets_unfold1 in H;
+    destruct H as [H _];
+    try (rewrite <- Bool.not_true_iff_false in H;
+         try (rewrite lt_spec in H; unfold_sem in H; try lia))
+  ].
+
+Ltac choose_if_else_branch H :=
+  try unfold_sem1 in H;
+  Sets_unfold1 in H;
+  destruct H as [H | H];
+  [
+    Sets_unfold1 in H;
+    let s := fresh "s" in
+    destruct H as [s [H _] ];
+    unfold test_true in H; Sets_unfold1 in H;
+    destruct H as [H _];
+    try (rewrite lt_spec in H; unfold_sem in H; try lia)
+  |
+    Sets_unfold1 in H;
+    let s := fresh "s" in
+    let H0 := fresh "H" in
+    destruct H as [s [H0 H] ];
+    unfold test_false in H0; Sets_unfold1 in H0;
+    destruct H0 as [_ H0]; subst s
+  ].
+
+(** 下面我们再一次重新证明前面的例子。*)
+
+Example abs_neg_5_fact___again2:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ if ("x" < 0)
+                 then { "y" = 0 - "x" }
+                 else { "y" = "x" } ⟧ ->
+    s1 "x" = -5 ->
+    s2 "y" = 5.
+Proof.
+  intros.
+  choose_if_then_branch H.
+  (** 此时，已经排除了if-else分支的可能性，并且已经导出：
+      - H: (s1, s2) ∈ ⟦ "y" = 0 - "x" ⟧ *)
+  pose proof H.(asgn_sem_asgn_var).
+  unfold_sem in H1.
+  lia.
+Qed.
+
+(** 下面是使用这些集成证明指令的另外两个例子。*)
+
+Example if_lt_10_plus_one_fact0:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ if ("x" < 10)
+                 then { "x" = "x" + 1 }
+                 else { skip } ⟧ ->
+    s1 "x" = 0 ->
+    s2 "x" = 1.
+Proof.
+  intros.
+  choose_if_then_branch H.
+  pose proof H.(asgn_sem_asgn_var).
+  unfold_sem in H1.
+  lia.
+Qed.
+
+Example if_lt_10_plus_one_fact10:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ if ("x" < 10)
+                 then { "x" = "x" + 1 }
+                 else { skip } ⟧ ->
+    s1 "x" = 10 ->
+    s2 "x" = 10.
+Proof.
+  intros.
+  choose_if_else_branch H.
+  unfold_sem in H.
+  sets_unfold in H.
+  subst s2; lia.
+Qed.
+
+(** 下面证明几条程序语句语义的一般性性质。我们首先可以证明，两种while语句语义的定义方式
+    是等价的。*)
+
+(************)
+(** 习题：  *)
+(************)
+
+Lemma while_sem1_while_sem2_equiv:
+  forall D0 D1,
+    WhileSem1.while_sem D0 D1 ==
+    WhileSem2.while_sem D0 D1.
+Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+
+(** 还可以证明，_[boundedLB]_是递增的。*)
+
+Lemma boundedLB_inc1: forall D0 D1 n,
+  boundedLB D0 D1 n ⊆ boundedLB D0 D1 (S n).
+Proof.
+  intros.
+  induction n; simpl.
+  + apply Sets_empty_included.
+  + rewrite IHn at 1.
+    reflexivity.
+Qed.
+
+Theorem boundedLB_inc: forall D0 D1 n m,
+  boundedLB D0 D1 m ⊆ boundedLB D0 D1 (n + m).
+Proof.
+  intros.
+  induction n; simpl.
+  + reflexivity.
+  + rewrite IHn.
+    rewrite (boundedLB_inc1 D0 D1 (n + m)) at 1.
+    simpl.
+    reflexivity.
+Qed.
+
+(** 下面定义程序语句的行为等价。*)
 
 Definition cequiv (c1 c2: com): Prop :=
   ⟦ c1 ⟧ == ⟦ c2 ⟧.
@@ -697,7 +982,6 @@ Proof.
   rewrite H.
   tauto.
 Qed.
-(** *)
 
 #[export] Instance test_false_congr:
   Proper (func_equiv _ _ ==> Sets.equiv) test_false.
@@ -742,6 +1026,13 @@ Qed.
 
 (** 下面证明Simplewhile程序语句行为等价的代数性质。*)
 
+#[export] Instance cequiv_equiv: Equivalence cequiv.
+Proof.
+  unfold cequiv.
+  apply equiv_in_domain.
+  apply Sets_equiv_equiv.
+Qed.
+
 #[export] Instance CAsgn_congr:
   Proper (eq ==> iequiv ==> cequiv) CAsgn.
 Proof.
@@ -749,7 +1040,6 @@ Proof.
   intros; simpl.
   apply asgn_sem_congr; tauto.
 Qed.
-(** *)
 
 #[export] Instance CSeq_congr:
   Proper (cequiv ==> cequiv ==> cequiv) CSeq.
@@ -758,7 +1048,6 @@ Proof.
   intros; simpl.
   apply seq_sem_congr; tauto.
 Qed.
-(** *)
 
 #[export] Instance CIf_congr:
   Proper (bequiv ==> cequiv ==> cequiv ==> cequiv) CIf.
@@ -767,7 +1056,6 @@ Proof.
   intros; simpl.
   apply if_sem_congr; tauto.
 Qed.
-(** *)
 
 #[export] Instance CWhile_congr:
   Proper (bequiv ==> cequiv ==> cequiv) CWhile.
@@ -776,5 +1064,89 @@ Proof.
   intros; simpl.
   apply while_sem_congr; tauto.
 Qed.
+
+(** 更多关于程序行为的有用性质可以使用集合与关系的运算性质完成证明，_[seq_skip]_与
+    _[skip_seq]_表明了删除顺序执行中多余的空语句不改变程序行为。*)
+
+Lemma seq_skip:
+  forall c, [[ c; skip ]] ~=~ c.
+Proof.
+  intros.
+  unfold cequiv.
+  unfold_sem.
+  apply Rels_concat_id_r.
+Qed.
+
+Lemma skip_seq:
+  forall c, [[ skip; c ]] ~=~ c.
+Proof.
+  intros.
+  unfold cequiv.
+  unfold_sem.
+  apply Rels_concat_id_l.
+Qed.
+
+(** 类似的，_[seq_assoc]_表明顺序执行的结合顺序是不影响程序行为的，因此，所有实际的编
+    程中都不需要在程序开发的过程中额外标明顺序执行的结合方式。*)
+
+Lemma seq_assoc: forall c1 c2 c3,
+  [[ (c1; c2); c3 ]] ~=~ [[ c1; (c2; c3) ]].
+Proof.
+  intros.
+  unfold cequiv.
+  unfold_sem.
+  apply Rels_concat_assoc.
+Qed.
+
+(** 前面提到，while循环语句的行为也可以描述为：只要循环条件成立，就先执行循环体再重新执
+    行循环。我们可以证明，我们目前定义的程序语义符合这一性质。*)
+
+
+Lemma while_unroll1: forall e c,
+  [[ while (e) do {c} ]] ~=~
+  [[ if (e) then { c; while (e) do {c} } else {skip} ]].
+Proof.
+  unfold cequiv.
+  intros; simpl.
+  unfold while_sem, if_sem, seq_sem, skip_sem.
+  rewrite Rels_concat_id_r.
+  apply Sets_equiv_Sets_included; split.
+  + apply Sets_indexed_union_included.
+    intros n.
+    destruct n; simpl.
+    - apply Sets_empty_included.
+    - rewrite <- (Sets_included_indexed_union n).
+      reflexivity.
+  + apply Sets_union_included.
+    - rewrite Rels_concat_indexed_union_distr_l.
+      rewrite Rels_concat_indexed_union_distr_l.
+      apply Sets_indexed_union_included; intros.
+      rewrite <- (Sets_included_indexed_union (S n)).
+      simpl.
+      apply Sets_included_union1.
+    - rewrite <- (Sets_included_indexed_union (S O)).
+      simpl boundedLB.
+      apply Sets_included_union2.
+Qed.
+
+(** 下面我们证明，我们先前定义的_[remove_skip]_变换保持程序行为不变。*)
+
+Theorem remove_skip_sound: forall c,
+  remove_skip c ~=~ c.
+Proof.
+  intros.
+  induction c; simpl.
+  + reflexivity.
+  + reflexivity.
+  + destruct (remove_skip c1), (remove_skip c2);
+      rewrite <- IHc1, <- IHc2, ?skip_seq, ?seq_skip;
+      try reflexivity.
+  + rewrite IHc1, IHc2.
+    reflexivity.
+  + rewrite IHc.
+    reflexivity.
+Qed.
+
+
 
 End DntSem_SimpleWhile3_Properties.

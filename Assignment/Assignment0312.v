@@ -69,15 +69,26 @@ Lemma CSeq_right_assoc_no_left_assoc: forall c c0,
   no_left_assoc c ->
   no_left_assoc c0 ->
   no_left_assoc (CSeq_right_assoc c c0).
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  induction c; simpl; try tauto.
+  split.
+  + apply H.
+  + split.
+    apply H.
+    apply IHc2.
+    apply H.
+Qed.
 
 (** 下面是需要证明的最终结论。*)
 
 Theorem right_assoc_no_left_assoc: forall c,
   no_left_assoc (right_assoc c).
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
-
-
+Proof.
+  intros.
+  induction c; simpl; try tauto.
+  apply CSeq_right_assoc_no_left_assoc; tauto.
+Qed.
 
 (************)
 (** 习题：  *)
@@ -89,8 +100,16 @@ Theorem if_seq:
   forall e c1 c2 c3,
     [[ if (e) then { c1 } else { c2 }; c3 ]] ~=~
     [[ if (e) then { c1; c3 } else { c2; c3 } ]].
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
-
+Proof.
+  intros.
+  unfold cequiv.
+  simpl.
+  unfold_sem.
+  rewrite Rels22_concat_union_distr_r.
+  rewrite Rels22_concat_assoc.
+  rewrite Rels22_concat_assoc.
+  reflexivity.
+Qed.
 
 (************)
 (** 习题：  *)
@@ -100,10 +119,30 @@ Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结
 
 Lemma CSeq_right_assoc_sound: forall c c0,
   CSeq_right_assoc c c0 ~=~ [[ c; c0 ]].
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  unfold cequiv.
+  simpl.
+  induction c, c0;
+  simpl;
+  try tauto;
+  try reflexivity;
+  rewrite IHc2;
+  unfold_sem;
+  rewrite Rels22_concat_assoc;
+  reflexivity.
+Qed.
 
 Theorem right_assoc_sound: forall c,
   right_assoc c ~=~ c.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
-
+Proof.
+  intros.
+  induction c;
+  simpl;
+  try rewrite CSeq_right_assoc_sound;
+  try rewrite IHc;
+  try rewrite IHc1;
+  try rewrite IHc2;
+  try reflexivity.
+Qed.
 

@@ -549,7 +549,6 @@ Qed.
     - 右分配律：_[(x ∪ y) ∘ z == x ∘ z ∪ y ∘ z]_
 
     另外，二元关系对并集的分配律对于无穷并集也成立。*)
-Check Rels_concat_indexed_union_distr_l.
 (************)
 (** 习题：  *)
 (************)
@@ -733,17 +732,43 @@ Proof.
 Qed.
 
 (** 在上面证明中，有这样一些有用的证明模式：
+
     - 遇到形如_[(s1, s2) ∈ ⟦ if (...) then { ... } else { ... } ⟧]_或形如
       _[(s1, s2) ∈ R1 ∪ R2]_的前提时，可以对其分类讨论；
+
     - 遇到形如_[(s1, s2) ∈ ⟦ ... ; ... ⟧]_或形如_[(s1, s2) ∈ R1 ∘ R2]_的前提时，可
       以将其拆解为两个步骤的信息；
+
     - 遇到形如_[(s1, s2) ∈ test_true (...)]_或_[(s1, s2) ∈ test_false (...)]_的前
-      提时，可以得到_[s1]_上布尔表达式求值的真假，并推断出_[s1 = s2]_。*)
+      提时，可以得到_[s1]_上布尔表达式求值的真假，并推断出_[s1 = s2]_。
+
+    下面我们引入_[destruct_union]_、_[destruct_concat]_两条集成证明指令来简化证明。*)
+
+Ltac destruct_Sets_union_tac H H1 H2 :=
+  match type of H with
+  | (?s1, ?s2) ∈ ?R1 ∪ ?R2 =>
+      change ((s1, s2) ∈ R1 \/ (s1, s2) ∈ R2) in H;
+      destruct H as [H1 | H2]
+  | (?s1, ?s2) ∈ if_sem ?D0 ?D1 ?D2 =>
+      change ((s1, s2) ∈ test_true D0 ∘ D1 \/ 
+              (s1, s2) ∈ test_false D0 ∘ D2) in H;
+      destruct H as [H1 | H2]
+  | (?s1, ?s2) ∈ eval_com (CIf ?e ?c1 ?c2) =>
+      change ((s1, s2) ∈ test_true ⟦ e ⟧ ∘ ⟦ c1 ⟧ \/ 
+              (s1, s2) ∈ test_false ⟦ e ⟧ ∘ ⟦ c2 ⟧) in H;
+      destruct H as [H1 | H2]
+  end.
 
 Ltac destruct_Rels_concat_tac H x H1 H2 :=
   match type of H with
   | (?s1, ?s2) ∈ ?R1 ∘ ?R2 =>
       change (exists x0, (s1, x0) ∈ R1 /\ (x0, s2) ∈ R2) in H;
+      destruct H as [x [H1 H2] ]
+  | (?s1, ?s2) ∈ seq_sem ?R1 ?R2 =>
+      change (exists x0, (s1, x0) ∈ R1 /\ (x0, s2) ∈ R2) in H;
+      destruct H as [x [H1 H2] ]
+  | (?s1, ?s2) ∈ eval_com (CSeq ?c1 ?c2) =>
+      change (exists x0, (s1, x0) ∈ ⟦ c1 ⟧ /\ (x0, s2) ∈ ⟦ c2 ⟧) in H;
       destruct H as [x [H1 H2] ]
   end.
 
@@ -766,6 +791,9 @@ Ltac destruct_Rels_concat_test_tac H H1 H2 :=
            rewrite lt_spec in H1)
   end.
 
+Tactic Notation "destruct_union" constr(H) "as" "[" simple_intropattern(H1) "|" simple_intropattern(H2) "]" :=
+  destruct_Sets_union_tac H H1 H2.
+
 Tactic Notation "destruct_concat" constr(H) "as" "[" simple_intropattern(x) simple_intropattern(H1) simple_intropattern(H2) "]" :=
   destruct_Rels_concat_tac H x H1 H2.
 
@@ -783,9 +811,7 @@ Example abs_neg_5_fact___again:
     s2 "y" = 5.
 Proof.
   intros.
-  unfold_sem1 in H.
-  Sets_unfold1 in H.
-  destruct H.
+  destruct_union H as [H | H].
   + destruct_concat H as [_ H].
     pose proof H.(asgn_sem_asgn_var).
     unfold_sem in H1.
@@ -795,47 +821,27 @@ Proof.
     lia.
 Qed.
 
-(** 事实上，我们可以对这些证明步骤进一步集成。*)
+(** 事实上，我们可以对这些证明步骤进一步集成，之后，我们也可以用
+    - _[choose_if_then_branch]_
+    - _[choose_if_else_branch]_
+    这两条指令证明if语句的性质。*)
 
 Ltac choose_if_then_branch H :=
-  try unfold_sem1 in H;
-  Sets_unfold1 in H;
-  destruct H as [H | H];
+  destruct_Sets_union_tac H H H;
   [
-    Sets_unfold1 in H;
-    let s := fresh "s" in
-    let H0 := fresh "H" in
-    destruct H as [s [H0 H] ];
-    unfold test_true in H0; Sets_unfold1 in H0;
-    destruct H0 as [_ H0]; subst s
+    destruct_concat H as [_ H]
   |
-    Sets_unfold1 in H;
-    let s := fresh "s" in
-    destruct H as [s [H _] ];
-    unfold test_false in H; Sets_unfold1 in H;
-    destruct H as [H _];
-    try (rewrite <- Bool.not_true_iff_false in H;
-         try (rewrite lt_spec in H; unfold_sem in H; try lia))
+    destruct_concat H as [H _];
+    try (unfold_sem in H; try lia)
   ].
 
 Ltac choose_if_else_branch H :=
-  try unfold_sem1 in H;
-  Sets_unfold1 in H;
-  destruct H as [H | H];
+  destruct_Sets_union_tac H H H;
   [
-    Sets_unfold1 in H;
-    let s := fresh "s" in
-    destruct H as [s [H _] ];
-    unfold test_true in H; Sets_unfold1 in H;
-    destruct H as [H _];
-    try (rewrite lt_spec in H; unfold_sem in H; try lia)
+    destruct_concat H as [H _];
+    try (unfold_sem in H; try lia)
   |
-    Sets_unfold1 in H;
-    let s := fresh "s" in
-    let H0 := fresh "H" in
-    destruct H as [s [H0 H] ];
-    unfold test_false in H0; Sets_unfold1 in H0;
-    destruct H0 as [_ H0]; subst s
+    destruct_concat H as [_ H]
   ].
 
 (** 下面我们再一次重新证明前面的例子。*)
@@ -892,15 +898,39 @@ Qed.
 (** 下面证明几条程序语句语义的一般性性质。我们首先可以证明，两种while语句语义的定义方式
     是等价的。*)
 
-(************)
-(** 习题：  *)
-(************)
-
 Lemma while_sem1_while_sem2_equiv:
   forall D0 D1,
     WhileSem1.while_sem D0 D1 ==
     WhileSem2.while_sem D0 D1.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  unfold WhileSem1.while_sem, while_sem.
+  apply Sets_equiv_Sets_included; split.
+  + apply Sets_indexed_union_included.
+    intros n.
+    rewrite <- (Sets_included_indexed_union (S n)).
+    induction n; simpl.
+    - Sets_unfold; intros; tauto.
+    - rewrite IHn; simpl.
+      Sets_unfold; intros; tauto.
+  + apply Sets_indexed_union_included.
+    intros n.
+    induction n; simpl.
+    - apply Sets_empty_included.
+    - rewrite IHn.
+      clear n IHn.
+      apply Sets_union_included.
+      * rewrite Rels_concat_indexed_union_distr_l.
+        rewrite Rels_concat_indexed_union_distr_l.
+        apply Sets_indexed_union_included.
+        intros n.
+        rewrite <- (Sets_included_indexed_union (S n)).
+        simpl.
+        reflexivity.
+      * rewrite <- (Sets_included_indexed_union O).
+        simpl.
+        reflexivity.
+Qed.
 
 (** 还可以证明，_[boundedLB]_是递增的。*)
 
@@ -1145,6 +1175,66 @@ Proof.
     reflexivity.
   + rewrite IHc.
     reflexivity.
+Qed.
+
+(** 最后，我们再证明一个while循环语句的例子。*)
+
+#[export] Instance ceval_congr:
+  Proper (cequiv ==> Sets.equiv) eval_com.
+Proof.
+  unfold Proper, respectful, cequiv.
+  tauto.
+Qed.
+
+Example loop_to_5_fact:
+  forall s1 s2,
+    (s1, s2) ∈ ⟦ while ("x" < 5) do { "x" = "x" + 1 } ⟧ ->
+    s1 "x" = 1 ->
+    s2 "x" = 5.
+Proof.
+  intros.
+  rewrite while_unroll1 in H.
+  choose_if_then_branch H.
+  destruct_concat H as [s1' H1 H].
+  pose proof H1.(asgn_sem_asgn_var).
+  unfold_sem in H2.
+  rewrite H0 in H2.
+  clear s1 H1 H0.
+  rename s1' into s1, H2 into H0.
+
+  rewrite while_unroll1 in H.
+  choose_if_then_branch H.
+  destruct_concat H as [s1' H1 H].
+  pose proof H1.(asgn_sem_asgn_var).
+  unfold_sem in H2.
+  rewrite H0 in H2.
+  clear s1 H1 H0.
+  rename s1' into s1, H2 into H0.
+
+  rewrite while_unroll1 in H.
+  choose_if_then_branch H.
+  destruct_concat H as [s1' H1 H].
+  pose proof H1.(asgn_sem_asgn_var).
+  unfold_sem in H2.
+  rewrite H0 in H2.
+  clear s1 H1 H0.
+  rename s1' into s1, H2 into H0.
+
+  rewrite while_unroll1 in H.
+  choose_if_then_branch H.
+  destruct_concat H as [s1' H1 H].
+  pose proof H1.(asgn_sem_asgn_var).
+  unfold_sem in H2.
+  rewrite H0 in H2.
+  clear s1 H1 H0.
+  rename s1' into s1, H2 into H0.
+
+  rewrite while_unroll1 in H.
+  choose_if_else_branch H.
+  unfold_sem in H.
+  sets_unfold in H.
+  subst s2.
+  lia.
 Qed.
 
 

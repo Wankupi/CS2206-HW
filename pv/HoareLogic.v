@@ -15,7 +15,8 @@ Module HoareSimpleWhile.
 Import Lang_SimpleWhile
        StateModel_SimpleWhile1
        DntSem_SimpleWhile2
-       DntSem_SimpleWhile3.
+       DntSem_SimpleWhile3
+       DntSem_SimpleWhile3_Properties.
 
 
 
@@ -29,9 +30,11 @@ Definition derives (P Q: assertion): Prop :=
 Definition logical_equiv (P Q: assertion): Prop :=
   forall s, P s <-> Q s.
 
-Definition andp (P Q: assertion): assertion := fun s => P s /\ Q s.
+Definition andp (P Q: assertion): assertion :=
+  fun s => P s /\ Q s.
 
-Definition exp (P: Z -> assertion): assertion := fun s => exists n, P n s.
+Definition exp (P: Z -> assertion): assertion :=
+  fun s => exists n, P n s.
 
 (** 下面的Notation定义可以跳过*)
 
@@ -75,7 +78,8 @@ Notation "{{ P }}  c  {{ Q }}" :=
 
 (** 一个布尔表达式为真是一个断言：*)
 
-Definition eb2assn (b: expr_bool): assertion := fun s => eval_expr_bool b s = true.
+Definition eb2assn (b: expr_bool): assertion :=
+  fun s => ⟦ b ⟧ s = true.
 
 (** 断言中描述整数的逻辑表达式（区分于程序表达式）：*)
 
@@ -84,7 +88,7 @@ Definition exprZ: Type := state -> Z.
 (** 一个程序中的整数类型可以用作逻辑表达式：*)
 
 Definition ei2exprZ (e: expr_int): exprZ :=
-  eval_expr_int e.
+  ⟦ e ⟧.
 
 (** 断言中的等号：*)
 
@@ -98,7 +102,7 @@ Definition state_subst (s: state) (x: var_name) (v: Z): state :=
     if String.eqb x y
     then v
     else s y.
-           
+
 (** 断言中的替换：*)
 
 Definition assn_subst (P: assertion) (x: var_name) (v: exprZ): assertion :=
@@ -176,8 +180,8 @@ Lemma hoare_skip_sound:
   forall P: assertion,
     valid {{ P }} skip {{ P }}.
 Proof.
-  simpl.
-  unfold skip_sem.
+  unfold valid.
+  unfold_sem.
   sets_unfold.
   intros.
   rewrite <- H0; tauto.
@@ -192,8 +196,7 @@ Proof.
   unfold valid.
   unfold_sem.
   intros.
-  Sets_unfold1 in H2.
-  destruct H2 as [s1' [? ?] ].
+  destruct_concat H2 as [s1' H2 H3].
   specialize (H _ _ H1 H2).
   specialize (H0 _ _ H H3).
   apply H0.
@@ -208,7 +211,20 @@ Lemma hoare_if_sound:
     valid {{ P && [[ e ]] }} c1 {{ Q }} ->
     valid {{ P && [[! e ]] }} c2 {{ Q }} ->
     valid {{ P }} if (e) then { c1 } else { c2 } {{ Q }}.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+(* 请在此处填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  unfold valid.
+  unfold_sem.
+  unfold andp, eb2assn.
+  intros.
+  destruct_union H2 as [H2 | H2];
+    destruct_concat H2 as [H2 H3].
+  + apply (H s1 s2); tauto.
+  + apply (H0 s1 s2).
+    - unfold_sem.
+      rewrite H2; tauto.
+    - tauto.
+Qed.
 
 (************)
 (** 习题：  *)
@@ -218,7 +234,32 @@ Lemma hoare_while_sound:
   forall (P: assertion) (e: expr_bool) (c: com),
     valid {{ P && [[ e ]] }} c {{ P }} ->
     valid {{ P }} while (e) do { c } {{ P && [[! e ]] }}.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+(* 请在此处填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  unfold valid.
+  unfold_sem.
+  unfold andp, eb2assn.
+  intros.
+  Sets_unfold1 in H1.
+  destruct H1 as [n ?].
+  revert s1 s2 H0 H1; induction n; intros.
+  + simpl boundedLB in H1.
+    sets_unfold in H1.
+    tauto.
+  + simpl boundedLB in H1.
+    destruct_union H1 as [H1 | H1].
+    - destruct_concat H1 as [H1 H2].
+      destruct_concat H2 as [s1' H2 H3].
+      apply (IHn s1'); [| tauto].
+      apply (H s1); tauto.
+    - unfold test_false in H1.
+      sets_unfold in H1.
+      destruct H1.
+      subst s2.
+      unfold_sem.
+      rewrite H1.
+      tauto.
+Qed.
 
 Lemma state_subst_fact:
   forall (s1 s2: state) (x: var_name),
@@ -244,7 +285,21 @@ Qed.
 Lemma hoare_asgn_fwd_sound:
   forall P x e,
     valid {{ P }} x = e {{ exists x', exprZ_subst [[ e ]] x [[ x' ]] == [[ x ]] && assn_subst P x [[ x' ]] }}.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+(* 请在此处填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  intros.
+  unfold valid.
+  unfold_sem.
+  unfold andp, exp, exprZ_eq, const_sem, var_sem, ei2exprZ.
+  intros.
+  pose proof H0.(asgn_sem_other_var).
+  unfold_substs.
+  unfold_sem.
+  exists (s1 x).
+  rewrite state_subst_fact by
+    (pose proof H0.(asgn_sem_other_var); tauto).
+  rewrite H0.(asgn_sem_asgn_var); tauto.
+Qed.
 
 (************)
 (** 习题：  *)
@@ -256,7 +311,14 @@ Lemma hoare_conseq_sound:
     derives P P' ->
     derives Q' Q ->
     valid {{ P }} c {{ Q }}.
-Admitted. (* 请删除这一行_[Admitted]_并填入你的证明，以_[Qed]_结束。 *)
+(* 请在此处填入你的证明，以_[Qed]_结束。 *)
+Proof.
+  unfold valid, derives.
+  intros.
+  apply H0 in H2.
+  specialize (H _ _ H2 H3).
+  apply H1; tauto.
+Qed.
 
 (** 下面定义可证：*)
 
